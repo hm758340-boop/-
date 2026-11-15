@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المكتبة الإلكترونية - الصف الأول الثانوي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #3b82f6;
+            --accent: #f59e0b;
+            --bg-light: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* الهيدر */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* شريط البحث والفلترة */
+        .controls-container {
+            max-width: 1100px;
+            margin: -25px auto 2rem;
+            padding: 0 1rem;
+        }
+
+        .search-box {
+            background: var(--card-bg);
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            background: var(--card-bg);
+            border: 2px solid transparent;
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* شبكة الكتب */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            padding: 0 1.5rem;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .book-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 1.8rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-top: 5px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .book-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #e0f2fe;
+            color: var(--primary);
+            padding: 0.25rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .book-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            color: var(--primary);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .book-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .book-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.7rem;
+            border-radius: 10px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-view {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: #172554;
+        }
+
+        .btn-download {
+            background: #f1f5f9;
+            color: var(--text-dark);
+            border: 1px solid #cbd5e1;
+        }
+
+        .btn-download:hover {
+            background: #e2e8f0;
+        }
+
+        /* الفوتر */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: white;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1><i class="fas fa-book-reader"></i> المكتبة الإلكترونية الشاملة</h1>
+        <p>كتب الوزارة والمناهج الدراسية - الصف الأول الثانوي (الفصل الدراسي الأول)</p>
+    </header>
+
+    <div class="controls-container">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="ابحث عن اسم المادة أو الكتاب (مثل: العلوم المتكاملة، البرمجة، التاريخ...)">
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">جميع المواد</button>
+            <button class="filter-btn" data-filter="languages">اللغات</button>
+            <button class="filter-btn" data-filter="science">العلوم والرياضيات</button>
+            <button class="filter-btn" data-filter="humanities">الأدبيات والبرمجة</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="books-grid" id="booksGrid">
+
+            <!-- كتاب اللغة العربية -->
+            <div class="book-card" data-category="languages">
+                <span class="book-badge">الترم الأول</span>
+                <div>
+                    <div class="book-icon"><i class="fas fa-feather-alt"></i></div>
+                    <h3>اللغة العربية</h3>
+                    <p>كتاب الوزارة الرسمي في النحو، البلاغة، الأدب، والنصوص للصف الأول الثانوي.</p>
+                </div>
+                <div class="card-actions">
+                    <a href="arabic_1sec_t1.pdf" target="_blank" class="btn btn-view"><i class="fas fa-eye"></i> تصفح</a>
+                    <a href="arabic_1sec_t1.pdf" download class="btn btn-download"><i class="fas fa-download"></i> تحميل</a>
+                </div>
+            </div>
+
+            <!-- كتاب اللغة الإنجليزية -->
+            <div class="book-card" data-category="languages">
+                <span class="book-badge">الترم الأول</span>
+                <div>
+                    <div class="book-icon"><i class="fas fa-language"></i></div>
+                    <h3>اللغة الإنجليزية (English)</h3>
+                    <p>كتاب الطالب والأنشطة في اللغة الإنجليزية - المنهج المطور.</p>
+                </div>
+                <div class="card-actions">
+                    <a href="English_1sec_t1.pdf" target="_blank" class="btn btn-view"><i class="fas fa-eye"></i> تصفح</a>
+                    <a href="English_1sec_t1.pdf" download class="btn btn-download"><i class="fas fa-download"></i> تحميل</a>
+                </div>
+            </div>
+
+            <!-- كتاب العلوم المتكاملة -->
+            <div class="book-card" data-category="science">
+                <span class="book-badge">الترم الأول</span>
+                <div>
+                    <div class="book-icon"><i class="fas fa-atom"></i></div>
+                    <h3>العلوم المتكاملة</h3>
+                    <p>المنهج الجديد للعلوم المتكاملة (الفيزياء، الكيمياء، والأحياء) باللغة العربية.</p>
+                </div>
+                <div class="card-actions">
+                    <a href="integratedscience_ARABIC_1_Secondary_TR1.pdf" target="_blank" class="btn btn-view"><i class="fas fa-eye"></i> تصفح</a>
+                    <a href="integratedscience_ARABIC_1_Secondary_TR1.pdf" download class="btn btn-download"><i class="fas fa-download"></i> تحميل</a>
+                </div>
+            </div>
+
+            <!-- كتاب الرياضيات -->
+            <div class="book-card" data-category="science">
+                <span class="book-badge">الترم الأول</span>
+                <div>
+                    <div class="book-icon"><i class="fas fa-square-root-alt"></i></div>
+                    <h3>الرياضيات</h3>
+                    <p>كتاب الجبر وحساب المثلثات والهندسة المستوية للصف الأول الثانوي.</p>
+                </div>
+                <div class="card-actions">
+                    <a href="Mathematics_AR_Tr1_Secondary.pdf" target="_blank" class="btn btn-view"><i class="fas fa-eye"></i> تصفح</a>
+                    <a href="Mathematics_AR_Tr1_Secondary.pdf" download class="btn btn-download"><i class="fas fa-download"></i> تحميل</a>
+                </div>
+            </div>
+
+            <!-- كتاب تكنولوجيا المعلومات والبرمجة -->
+            <div class="book-card" data-category="humanities">
+                <span class="book-badge">الترم الأول</span>
+                <div>
+                    <div class="book-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3>تكنولوجيا المعلومات (ICT)</h3>
+                    <p>أساسيات البرمجة، تصميم المواقع، وتكنولوجيا المعلومات والاتصالات.</p>
+                </div>
+                <div class="card-actions">
+                    <a href="ICT_AR_Sec1_Tr1.pdf" target="_blank" class="btn btn-view"><i class="fas fa-eye"></i> تصفح</a>
+                    <a href="ICT_AR_Sec1_Tr1.pdf" download class="btn btn-download"><i class="fas fa-download"></i> تحميل</a>
+                </div>
+            </div>
+
+            <!-- كتاب التاريخ -->
+            <div class="book-card" data-category="humanities">
+                <span class="book-badge">الترم الأول</span>
+                <div>
+                    <div class="book-icon"><i class="fas fa-landmark"></i></div>
+                    <h3>التاريخ</h3>
+                    <p>تاريخ مصر والحضارات القديمة للصف الأول الثانوي.</p>
+                </div>
+                <div class="card-actions">
+                    <a href="History_Sec1_Tr1.pdf" target="_blank" class="btn btn-view"><i class="fas fa-eye"></i> تصفح</a>
+                    <a href="History_Sec1_Tr1.pdf" download class="btn btn-download"><i class="fas fa-download"></i> تحميل</a>
+                </div>
+            </div>
+
+            <!-- كتاب الفلسفة والمنطق -->
+            <div class="book-card" data-category="humanities">
+                <span class="book-badge">الترم الأول</span>
+                <div>
+                    <div class="book-icon"><i class="fas fa-brain"></i></div>
+                    <h3>الفلسفة والمنطق</h3>
+                    <p>مبادئ التفكير الفلسفي والعلمي للصف الأول الثانوي.</p>
+                </div>
+                <div class="card-actions">
+                    <a href="Philosophy_and_Logic_Tr1_1sec.pdf" target="_blank" class="btn btn-view"><i class="fas fa-eye"></i> تصفح</a>
+                    <a href="Philosophy_and_Logic_Tr1_1sec.pdf" download class="btn btn-download"><i class="fas fa-download"></i> تحميل</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>تم التصميم والتطوير لدعم العملية التعليمية &copy; 2026 - الصف الأول الثانوي</p>
+    </footer>
+
+    <script>
+        // كود البحث الفوري
+        const searchInput = document.getElementById('searchInput');
+        const bookCards = document.querySelectorAll('.book-card');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            bookCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const desc = card.querySelector('p').textContent.toLowerCase();
+                if (title.includes(query) || desc.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // كود تصفية الأقسام
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-filter');
+
+                bookCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
